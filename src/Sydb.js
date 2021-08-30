@@ -1,4 +1,4 @@
-const { existsSync, readFileSync } = require("fs")
+const { existsSync, readFileSync, mkdirSync, writeFileSync } = require("fs")
 const manager = require("./Manager")
 const { refVal, createObj } = require("./Utils")
 
@@ -41,6 +41,7 @@ class SyDB {
             },
             set: (value) => {
                 this.obj = manager.set(this.obj, path, value, this.options.split)
+                this._write()
                 return this.obj
             }
         }
@@ -57,7 +58,13 @@ class SyDB {
     }
 
     _write() {
+        const array = this._filePath.split("/")
+		array.pop()
 
+		const path = array.join("/")
+
+		if(array.length && !existsSync(path)) mkdirSync(path, { recursive: true })
+		return writeFileSync(this._filePath, JSON.stringify(this.obj, null, 2))
     }
 
     get _filePath() {
