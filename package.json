@@ -1,0 +1,29 @@
+{
+  "name": "sydb",
+  "version": "1.0.0",
+  "description": "A simple local database using the Node.js file system module.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JVOPINHO/sydb.git"
+  },
+  "keywords": [
+    "database",
+    "local",
+    "database",
+    "json",
+    "database"
+  ],
+  "author": "JVOPINHO",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JVOPINHO/sydb/issues"
+  },
+  "homepage": "https://github.com/JVOPINHO/sydb#readme"
+}
