@@ -21,7 +21,7 @@ class SyDB {
 
         this.obj = this._read()
     }
-
+    
     /**
      * 
      * @param {string} path 
@@ -30,6 +30,7 @@ class SyDB {
     ref(path) {
         if(path && typeof path != "string") throw new Error("<Sydb>.ref() must be a string.")
         if(!path) path = ""
+        this.obj = this._read()
 
         return {
             /**
@@ -37,6 +38,10 @@ class SyDB {
              */
             val: (options) => {
                 return refVal(this.obj, path, this.options.split)
+            },
+            set: (value) => {
+                this.obj = manager.set(this.obj, path, value, this.options.split)
+                return this.obj
             }
         }
     }
@@ -49,6 +54,10 @@ class SyDB {
         }
         
         return obj
+    }
+
+    _write() {
+
     }
 
     get _filePath() {

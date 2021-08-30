@@ -9,6 +9,7 @@ module.exports = {
         const obj = {}
         return obj
     },
+    setValue: require("./setValue.js"),
     /**
      * 
      * @param {object} obj 
