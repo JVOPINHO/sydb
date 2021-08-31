@@ -19,11 +19,11 @@ module.exports = {
      */
     refVal: function(obj, path, split = "/") {
         let array = path.split(split).filter(x => x)
-        let valor = obj;
+        let valor = { ...obj };
         for(let element of array.filter(x => x)) {
           if(valor) valor = valor[`${element}`]
           else {
-            valor = undefined;
+            valor = null;
             break;
           };
         }

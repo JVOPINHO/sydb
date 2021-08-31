@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/index.js"
+    "test": "node test/test.js"
   },
   "repository": {
     "type": "git",
@@ -15,13 +15,15 @@
   },
   "keywords": [
     "database",
-    "local",
-    "database",
+    "local database",
     "json",
-    "database"
+    "database",
+    "fs",
+    "filesystem",
+    "db"
   ],
   "author": "JVOPINHO",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/JVOPINHO/sydb/issues"
   },

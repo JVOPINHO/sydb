@@ -1,0 +1,17 @@
+{
+    "users": {
+        "001": {
+            "name": "João Oliveira",
+            "nickname": "JVOPINHO"
+        },
+        "002": null,
+        "003": {
+            "name": "Luiz",
+            "nickname": "luizdodibre"
+        },
+        "004": {
+            "name": "Sayran",
+            "nickname": "Polaroo"
+        }
+    }
+}

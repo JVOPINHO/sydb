@@ -34,6 +34,15 @@ module.exports = {
         })
         return obj
     },
+    push: function(obj, ref, value, split = "/") {
+        const data = { ...obj }
+        if(!ref && !Array.isArray(value)) throw new Error("<Sydb>.ref().push() must be a array.")
+        else if(!ref && Array.isArray(value)) return value
+        else {
+            setValue(data, ref, value, split)
+            return data
+        }
+    },
     delete: function(obj, ref, split = "/") {
         if(!ref) return createObj()
         let _obj = obj
