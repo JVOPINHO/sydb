@@ -12,7 +12,7 @@ module.exports = {
     setValue: require("./setValue.js"),
     /**
      * 
-     * @param {object} obj 
+     * @param {Object} obj 
      * @param {string} string 
      * @param {string} split 
      * @returns 

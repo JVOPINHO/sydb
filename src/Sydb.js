@@ -1,4 +1,4 @@
-const { existsSync, readFileSync, mkdirSync, writeFileSync } = require("fs")
+const { existsSync, readFileSync, mkdirSync, writeFileSync, statSync } = require("fs")
 const manager = require("./Manager")
 const { refVal, createObj } = require("./Utils")
 
@@ -14,7 +14,7 @@ class SyDB {
     constructor(filePath = "sydb", options = {}) {
         if(typeof filePath != "string") throw new Error("<Sydb> filePath must be a string.")
 
-        this.filePath = filePath.endsWith(".json") ? filePath : filePath + ".json"
+        this.filePath = filePath
         this.options = {
             split: options.split || "/"
         }
@@ -30,17 +30,29 @@ class SyDB {
     ref(path) {
         if(path && typeof path != "string") throw new Error("<Sydb>.ref() must be a string.")
         if(!path) path = ""
-        this.obj = this._read()
 
         return {
             /**
-             * @param {object} options
+             * @param {Object} options
              */
             val: (options) => {
-                return refVal(this.obj, path, this.options.split)
+                return refVal(this._read(), path, this.options.split)
             },
+            /**
+             * @param {Object|Array|string|boolean|number} value
+             */
             set: (value) => {
-                this.obj = manager.set(this.obj, path, value, this.options.split)
+                this.obj = manager.set(this._read(), path, value, this.options.split)
+                this._write()
+                return this.obj
+            },
+            update: (value) => {
+                this.obj = manager.update(this._read(), path, value, this.options.split)
+                this._write()
+                return this.obj
+            },
+            delete: () => {
+                this.obj = manager.delete(this._read(), path, this.options.split)
                 this._write()
                 return this.obj
             }
@@ -64,7 +76,7 @@ class SyDB {
 		const path = array.join("/")
 
 		if(array.length && !existsSync(path)) mkdirSync(path, { recursive: true })
-		return writeFileSync(this._filePath, JSON.stringify(this.obj, null, 2))
+		return writeFileSync(this._filePath, JSON.stringify(this.obj, null, 4))
     }
 
     get _filePath() {

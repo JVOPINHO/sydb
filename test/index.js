@@ -2,4 +2,8 @@ const SyDB = require("../index.js");
 
 const database = new SyDB()
 
-console.log(database.ref("a").set("a"))
+const a = database.ref("001")
+
+a.update({
+    name: "Br"
+})
