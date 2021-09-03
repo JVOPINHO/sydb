@@ -11,6 +11,7 @@ module.exports = {
      */
     set: function(obj, ref, value, split = "/") {
         const data = { ...obj }
+        if(value instanceof Map) value = Object.fromEntries(value)
         if(!ref && !isObject(value)) throw new Error("<Sydb>.ref().set() must be a object.")
         else if(!ref && isObject(value)) return value
         else {
@@ -21,16 +22,21 @@ module.exports = {
     update: function(obj, ref, value, split = "/") {
         if(!isObject(value)) throw new Error("<Sydb>.ref(...).update() must be a object.")
         const pathValue = refVal(obj, ref, split)
+        
         if(!pathValue) {
             setValue(obj, ref, value, split)
             return obj
         }
+        
         if(!isObject(pathValue)) {
             setValue(obj, ref, value, split)
             return obj
         }
+        
         Object.keys(value).forEach((key) => {
-            setValue(obj, `${ref ? `${ref}${split}` : ""}${key}`, value[key], split)
+            let _value = value[key]
+            if(_value instanceof Map) _value = Object.fromEntries(_value)
+            setValue(obj, `${ref ? `${ref}${split}` : ""}${key}`, _value, split)
         })
         return obj
     },

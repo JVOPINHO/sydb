@@ -8,7 +8,7 @@ const isUnsafeKey = key => {
 
 const validateKey = key => {
     if (isUnsafeKey(key)) {
-        throw new Error(`Cannot set unsafe key: "${key}"`);
+        throw new Error(`<Sydb> Cannot set unsafe key: "${key}"`);
     }
 };
 
@@ -65,7 +65,8 @@ const setProp = (obj, prop, value) => {
 };
 
 const setValue = (obj, path, value, sep) => {
-    if (!path) return obj;
+    if(value instanceof Map) value = Object.fromEntries(value)
+    if (!path) return value;
     if (!isObject(obj)) return obj;
 
     const keys = split(path, sep);
@@ -79,12 +80,12 @@ const setValue = (obj, path, value, sep) => {
         validateKey(key);
 
         if (next === undefined) {
-        setProp(obj, key, value);
-        break;
+            setProp(obj, key, value);
+            break;
         }
 
         if (!isObject(obj[key])) {
-        obj[key] = {};
+            obj[key] = {};
         }
 
         obj = obj[key];

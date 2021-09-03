@@ -1,4 +1,5 @@
 const { existsSync, readFileSync, mkdirSync, writeFileSync, statSync } = require("fs")
+const Collection = require("./Collection")
 const manager = require("./Manager")
 const { refVal, createObj } = require("./Utils")
 
@@ -32,11 +33,14 @@ class SyDB {
         if(!path) path = ""
 
         return {
-            /**
-             * @param {Object} options
-             */
-            val: (options) => {
+            val: () => {
                 return refVal(this._read(), path, this.options.split)
+            },
+            toMap: () => {
+                let value = refVal(this._read(), path, this.options.split) || {}
+                if(value == null || value == undefined) value = {}
+                value = Object.entries(value)
+                return new Collection(value)
             },
             /**
              * @param {Object|Array|string|boolean|number} value

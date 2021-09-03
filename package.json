@@ -1,6 +1,6 @@
 {
   "name": "sydb",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A simple local database using the Node.js file system module.",
   "main": "index.js",
   "directories": {

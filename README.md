@@ -8,7 +8,7 @@
 ```javascript
     const Sydb = require("sydb")
 
-    const db = new ObjRef(path, options)
+    const db = new Sydb(path, options)
 ```
 
 |   Parameter   |   Type   | Descrirption                                   |
@@ -52,11 +52,11 @@ Json File
 <h4>Applying reference:</h4>
 
 ```javascript
-    obj.ref("reference")
+    db.ref("reference")
 
     // Example
 
-    obj.ref("users/001")
+    db.ref("users/001")
 ```
 
 <h3>Methods</h3>
@@ -65,11 +65,11 @@ Json File
 <p>The val method returns the value of the path determined by the reference</p>
 
 ```javascript
-    obj.ref(reference).val()
+    db.ref(reference).val()
 ```
 
 ```javascript
-    obj.ref("users/004").val() // -> { name: "Sayran", nickname: "Polaroo" }
+    db.ref("users/004").val() // -> { name: "Sayran", nickname: "Polaroo" }
 ```
 
 <br>
@@ -78,11 +78,11 @@ Json File
 <p>The set method changes the value of the path determined by the reference.</p>
 
 ```javascript
-    obj.ref(reference).set(value)
+    db.ref(reference).set(value)
 ```
 
 ```javascript
-    obj.ref("users/002").set({
+    db.ref("users/002").set({
         name: "Bryan",
         nickname: "TwoNike"
     }) // -> { users: { "001": {...}, "002": { name: "Bryan", nickname: "TwoNike" }, "003": {...}, "004": {...} } }
@@ -95,11 +95,11 @@ Json File
 <p><strong>Note: value must be an object.</strong></p>
 
 ```javascript
-    obj.ref(reference).update(value)
+    db.ref(reference).update(value)
 ```
 
 ```javascript
-    obj.ref("users/001").update({
+    db.ref("users/001").update({
         nickname: "JPinho"
     }) // -> { users: { "001": { name: "João Oliveira", nickname: "JPinho" }, "002": {...}, "003": {...}, "004": {...} } }
 ```
@@ -110,9 +110,9 @@ Json File
 <p>The delete method deletes the desired values from a path determined by the reference.</p>
 
 ```javascript
-    obj.ref("reference").delete()
+    db.ref("reference").delete()
 ```
 
 ```javascript
-    obj.ref("users/003").delete() // -> { users: { "001": {...}, "002": {...}, "004": {...} } }
+    db.ref("users/003").delete() // -> { users: { "001": {...}, "002": {...}, "004": {...} } }
 ```
