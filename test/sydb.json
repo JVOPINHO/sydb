@@ -1,6 +1,21 @@
 {
-    "a": "a",
-    "b": "b",
-    "c": "c",
-    "d": null
+    "users": {
+        "001": {
+            "name": "John Pinho",
+            "nickname": "JVOPINHO",
+            "friends": [
+                "Sayran",
+                "Tunike"
+            ]
+        },
+        "002": null,
+        "003": {
+            "name": "Luiz",
+            "nickname": "luizdodibre"
+        },
+        "004": {
+            "name": "Sayran",
+            "nickname": "Polaroo"
+        }
+    }
 }

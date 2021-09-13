@@ -1,6 +1,5 @@
 const { existsSync, readFileSync, mkdirSync, writeFileSync, statSync } = require("fs")
-const manager = require("./Manager")
-const { refVal, createObj, isObject, setValue } = require("./Utils")
+const { createObj, isObject, setValue } = require("./Utils")
 
 /*
 Modified version of Object Management Library https://github.com/JVOPINHO/ObjRef/
@@ -61,10 +60,26 @@ class SyDB {
             /**
              * 
              * @param {Object|Array|string|boolean|number} value 
-             * @param {Object} options 
+             * @param {{
+             *  force:boolean,
+             * flat:boolean
+             * }} options 
              */
             push: (value, options) => {
-                if(!value) return false
+                /**
+                 * @type {Array}
+                 */
+                let val = this.constructor.val(this._read(), path, this.options.split)
+                if(val == null || (!Array.isArray(val) && options.force == true)) val = []
+                
+                if(!Array.isArray(val) && options.force != true) return false
+                
+                if(options.flat != false && Array.isArray(value)) val = [...val, ...value]
+                else val = [...val, value]
+
+                this.obj = this.constructor.set(this._read(), path, val, this.options.split)
+                this._write()
+                return this.obj
             },
             delete: () => {
                 this.obj = this.constructor.delete(this._read(), path, this.options.split)
