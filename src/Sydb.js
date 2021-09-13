@@ -33,10 +33,10 @@ class SyDB {
 
         return {
             val: () => {
-                return refVal(this._read(), path, this.options.split)
+                return this.constructor.val(this._read(), path, this.options.split)
             },
             toMap: () => {
-                let value = refVal(this._read(), path, this.options.split) || {}
+                let value = this.constructor.val(this._read(), path, this.options.split) || {}
                 if(value == null || value == undefined) value = {}
                 value = Object.entries(value)
                 return new Map(value)
@@ -45,7 +45,7 @@ class SyDB {
              * @param {Object|Array|string|boolean|number} value
              */
             set: (value) => {
-                this.obj = manager.set(this._read(), path, value, this.options.split)
+                this.obj = this.constructor.set(this._read(), path, value, this.options.split)
                 this._write()
                 return this.obj
             },
@@ -54,7 +54,7 @@ class SyDB {
              * @param {Object} value
              */
             update: (value) => {
-                manager.update(this._read(), path, value, this.options.split)
+                this.obj = this.constructor.update(this._read(), path, value, this.options.split)
                 this._write()
                 return this.obj
             },
@@ -67,7 +67,7 @@ class SyDB {
                 if(!value) return false
             },
             delete: () => {
-                this.obj = manager.delete(this._read(), path, this.options.split)
+                this.obj = this.constructor.delete(this._read(), path, this.options.split)
                 this._write()
                 return this.obj
             }
@@ -103,7 +103,6 @@ class SyDB {
      * @param {Object} obj 
      * @param {string} string 
      * @param {string} split 
-     * @returns 
      */
     static val(obj, path, split = "/") {
         let array = path.split(split).filter(x => x)
@@ -118,6 +117,7 @@ class SyDB {
     
         return valor
     }
+
     /**
     * 
     * @param {Object} obj 
@@ -128,6 +128,7 @@ class SyDB {
     static set(obj, ref, value, split = "/") {
         const data = { ...obj }
         if(value instanceof Map) value = Object.fromEntries(value)
+        if(typeof value == "undefined") value = createObj()
         if(!ref && !isObject(value)) throw new Error("Sydb#set must be a object.")
         else if(!ref && isObject(value)) return value
         else {
@@ -145,7 +146,7 @@ class SyDB {
     */
     static update(obj, ref, value, split = "/") {
         if(!isObject(value)) throw new Error("Sydb#update must be a object.")
-        const pathValue = refVal(obj, ref, split)
+        const pathValue = this.val(obj, ref, split)
         
         if(!pathValue) {
             setValue(obj, ref, value, split)
