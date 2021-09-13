@@ -9,25 +9,5 @@ module.exports = {
         const obj = {}
         return obj
     },
-    setValue: require("./setValue.js"),
-    /**
-     * 
-     * @param {Object} obj 
-     * @param {string} string 
-     * @param {string} split 
-     * @returns 
-     */
-    refVal: function(obj, path, split = "/") {
-        let array = path.split(split).filter(x => x)
-        let valor = { ...obj };
-        for(let element of array.filter(x => x)) {
-          if(valor) valor = valor[`${element}`]
-          else {
-            valor = null;
-            break;
-          };
-        }
-    
-        return valor
-    }
+    setValue: require("./setValue.js")
 }

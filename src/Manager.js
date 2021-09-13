@@ -38,6 +38,7 @@ module.exports = {
             if(_value instanceof Map) _value = Object.fromEntries(_value)
             setValue(obj, `${ref ? `${ref}${split}` : ""}${key}`, _value, split)
         })
+
         return obj
     },
     push: function(obj, ref, value, split = "/") {
