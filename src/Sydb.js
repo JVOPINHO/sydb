@@ -105,17 +105,11 @@ class SyDB {
      * @param {string} split 
      */
     static val(obj, path, split = "/") {
-        let array = path.split(split).filter(x => x)
-        let valor = { ...obj };
-        for(let element of array.filter(x => x)) {
-          if(valor) valor = valor[`${element}`]
-          else {
-            valor = null;
-            break;
-          };
-        }
-    
-        return valor
+        const array = String(path).split(String(split)).filter(x => x)
+        const data = { ...obj };
+
+        const val = array.reduce((a, b) => (typeof a != "undefined" ? a : {})[b], data)
+        return typeof val != "undefined" ? val : null
     }
 
     /**
@@ -128,7 +122,7 @@ class SyDB {
     static set(obj, ref, value, split = "/") {
         const data = { ...obj }
         if(value instanceof Map) value = Object.fromEntries(value)
-        if(typeof value == "undefined") value = createObj()
+        if(typeof value == "undefined") value = null
         if(!ref && !isObject(value)) throw new Error("Sydb#set must be a object.")
         else if(!ref && isObject(value)) return value
         else {
