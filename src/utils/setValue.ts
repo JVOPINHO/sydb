@@ -1,10 +1,6 @@
 import { Reference } from '../../typings';
 import Utils from './Utils';
 
-function isObject(val: any) {
-    return val != null && typeof val === 'object' && Array.isArray(val) === false;
-}
-
 const isUnsafeKey = (key: string) => {
     return key === '__proto__' || key === 'constructor' || key === 'prototype';
 };
@@ -31,7 +27,7 @@ const setProp = (obj: any, prop: string, value: any) => {
 const setValue = (obj: any, path: Reference, value:  any, split: string) => {
     if(value instanceof Map) value = Object.fromEntries(value)
     if (!path) return value;
-    if (!isObject(obj)) return obj;
+    if (!Utils.isObject(obj)) return obj;
 
     const keys = Utils.resolveReference(path, { split });
     const len = keys.length;
@@ -48,7 +44,7 @@ const setValue = (obj: any, path: Reference, value:  any, split: string) => {
             break;
         }
 
-        if (!isObject(obj[key])) {
+        if (!Utils.isObject(obj[key])) {
             obj[key] = {};
         }
 

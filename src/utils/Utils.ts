@@ -2,6 +2,16 @@ import { ObjectManagerBaseOptions, Reference } from '../../typings';
 import { DefaultOptions } from './Constants';
 
 class Utils {
+    static isObject(val: any) {
+        return val != null && typeof val === 'object' && Array.isArray(val) === false;
+    }
+
+    static resolveValue(value: any) {
+        if (value instanceof Map) value = Object.fromEntries(value);
+        
+        return value;
+    }
+
     static resolveReference(reference: Reference, options?: ObjectManagerBaseOptions) {
         const split = options?.split ?? DefaultOptions.split;
     
