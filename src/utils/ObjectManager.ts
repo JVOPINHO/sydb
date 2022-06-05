@@ -1,4 +1,4 @@
-import { ObjectManagerGetOptions, ObjectManagerSetOptions, ObjectManagerDeleteOptions, Reference } from '../../typings';
+import { ObjectManagerGetOptions, ObjectManagerSetOptions, ObjectManagerDeleteOptions, Reference, ObjectManagerUpdateOptions } from '../../typings';
 import setValue from './setValue';
 import Utils from './Utils';
 
@@ -36,8 +36,30 @@ class ObjectManager {
         return array.length > 1 ? (array.pop() as string in (val || {})) : true;
     }
 
+    static update(obj: object, ref: Reference, value: object, options?: ObjectManagerUpdateOptions) {
+        value = Utils.resolveValue(value);
+        
+        if(!Utils.isObject(value)) {
+            throw new Error('<Sydb> Value must be an object');
+        }
+
+        const array = Utils.resolveReference(ref, options);
+        
+        const referenceValue = this.get(obj, array, options);
+        
+        if(referenceValue != null && !Utils.isObject(referenceValue) && !options?.force) {
+            throw new Error('<Sydb> Reference value must be an object, or force option must be set to true');
+        }
+
+        const oldValue = options?.force && !Utils.isObject(referenceValue) ? {} : { ...(referenceValue || {}) };
+
+        const newValue = { ...oldValue, ...value };
+
+        return this.set(obj, array, newValue, options);
+    }
+
     static set(obj: object, ref: Reference, value: any, options?: ObjectManagerSetOptions) {
-        setValue(obj, ref, value, options?.split ?? '/');
+        setValue(obj, ref, Utils.resolveValue(value), options?.split ?? '/');
 
         return obj;
     }

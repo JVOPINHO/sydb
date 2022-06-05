@@ -8,6 +8,10 @@ export interface ObjectManagerGetOptions extends ObjectManagerBaseOptions {
 
 export interface ObjectManagerSetOptions extends ObjectManagerBaseOptions {};
 
+export interface ObjectManagerUpdateOptions extends ObjectManagerBaseOptions {
+    force?: boolean;
+};
+
 export interface ObjectManagerDeleteOptions extends ObjectManagerBaseOptions {};
 
 export type Reference = string | symbol | Array<string>
