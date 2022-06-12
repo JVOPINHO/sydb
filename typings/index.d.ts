@@ -6,6 +6,10 @@ export interface ObjectManagerGetOptions extends ObjectManagerBaseOptions {
     returnType?: 'object' | 'map';
 };
 
+export interface ObjectManagerPushOptions extends ObjectManagerBaseOptions {
+    assignment?: boolean;
+};
+
 export interface ObjectManagerSetOptions extends ObjectManagerBaseOptions {};
 
 export interface ObjectManagerUpdateOptions extends ObjectManagerBaseOptions {

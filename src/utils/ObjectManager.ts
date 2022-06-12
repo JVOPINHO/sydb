@@ -36,6 +36,22 @@ class ObjectManager {
         return array.length > 1 ? (array.pop() as string in (val || {})) : true;
     }
 
+    static push(obj: object, ref: Reference, value: any, options?: ObjectManagerPushOptions) {
+        const array = Utils.resolveReference(ref, options);
+
+        const referenceValue = this.get(obj, array, options);
+
+        if(referenceValue != null && !Array.isArray(referenceValue)) {
+            throw new Error(`[Sydb] Reference ${String(ref)} is not an array`);
+        }
+
+        const oldValue = Array.isArray(referenceValue) ? [...referenceValue] : [];
+
+        const newValue = [...oldValue, ...(Array.isArray(value) && options?.assignment !== false ? value : [value])];
+
+        return this.set(obj, array, newValue, options);
+    }
+
     static set(obj: object, ref: Reference, value: any, options?: ObjectManagerSetOptions) {
         setValue(obj, ref, Utils.resolveValue(value), options?.split ?? '/');
 
