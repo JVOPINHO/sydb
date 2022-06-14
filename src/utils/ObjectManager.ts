@@ -1,4 +1,4 @@
-import { ObjectManagerAddOptions, ObjectManagerGetOptions, ObjectManagerSetOptions, ObjectManagerDeleteOptions, Reference, ObjectManagerUpdateOptions, ObjectManagerPushOptions } from '../../typings';
+import { ObjectManagerAddOptions, ObjectManagerGetOptions, ObjectManagerSetOptions, ObjectManagerDeleteOptions, Reference, ObjectManagerUpdateOptions, ObjectManagerPushOptions, ObjectManagerSubtractOptions } from '../../typings';
 import setValue from './setValue';
 import Utils from './Utils';
 
@@ -72,6 +72,22 @@ class ObjectManager {
         setValue(obj, ref, Utils.resolveValue(value), options?.split ?? '/');
 
         return obj;
+    }
+
+    static subtract(obj: object, ref: Reference, value: number, options?: ObjectManagerSubtractOptions) {
+        const array = Utils.resolveReference(ref, options);
+
+        const referenceValue = this.get(obj, array, options);
+
+        if(referenceValue != null && isNaN(Number(referenceValue))) {
+            throw new Error(`[Sydb] Reference ${String(ref)} is not an number`);
+        }
+
+        const oldValue = isNaN(Number(referenceValue)) ? 0 : Number(referenceValue);
+
+        const newValue = oldValue - value;
+
+        return this.set(obj, array, newValue, options);
     }
 
     static update(obj: object, ref: Reference, value: object, options?: ObjectManagerUpdateOptions) {

@@ -16,6 +16,8 @@ export interface ObjectManagerPushOptions extends ObjectManagerBaseOptions {
 
 export interface ObjectManagerSetOptions extends ObjectManagerBaseOptions {};
 
+export interface ObjectManagerSubtractOptions extends ObjectManagerBaseOptions {};
+
 export interface ObjectManagerUpdateOptions extends ObjectManagerBaseOptions {
     force?: boolean;
 };
