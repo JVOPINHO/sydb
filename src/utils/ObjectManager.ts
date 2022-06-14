@@ -1,4 +1,14 @@
-import { ObjectManagerAddOptions, ObjectManagerGetOptions, ObjectManagerSetOptions, ObjectManagerDeleteOptions, Reference, ObjectManagerUpdateOptions, ObjectManagerPushOptions, ObjectManagerSubtractOptions } from '../../typings';
+import { 
+    ObjectManagerAddOptions, 
+    ObjectManagerDeleteOptions, 
+    ObjectManagerGetOptions,
+    ObjectManagerHasOptions,
+    ObjectManagerPushOptions, 
+    ObjectManagerSetOptions,
+    ObjectManagerSubtractOptions, 
+    ObjectManagerUpdateOptions, 
+    Reference,
+} from '../../typings';
 import setValue from './setValue';
 import Utils from './Utils';
 
@@ -43,7 +53,7 @@ class ObjectManager {
         return val ?? null;
     }
 
-    static has(obj: object, ref: string, options?: ObjectManagerGetOptions) {
+    static has(obj: object, ref: string, options?: ObjectManagerHasOptions) {
         const array = Utils.resolveReference(ref, options);
         const data = { ...obj };
 
