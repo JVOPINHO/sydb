@@ -13,6 +13,29 @@ import setValue from './setValue';
 import Utils from './Utils';
 
 class ObjectManager {
+    public add: (ref: Reference, value: number, options?: ObjectManagerAddOptions) => object;
+    public delete: (ref: Reference, options?: ObjectManagerDeleteOptions) => boolean;
+    public get: (ref: Reference, options?: ObjectManagerGetOptions) => {};
+    public has: (ref: string, options?: ObjectManagerGetOptions) => boolean;
+    public push: (ref: Reference, value: any, options?: ObjectManagerPushOptions) => object;
+    public set: (ref: Reference, value: any, options?: ObjectManagerSetOptions) => object;
+    public subtract: (ref: Reference, value: number, options?: ObjectManagerSubtractOptions) => object;
+    public update: (ref: Reference, value: object, options?: ObjectManagerUpdateOptions) => object;
+
+    public data: object;
+    constructor(obj?: object) {
+        this.data = obj || {};
+
+        this.add = (ref, value, options) => ObjectManager.add(this.data, ref, value, options);
+        this.delete = (ref, options) => ObjectManager.delete(this.data, ref, options);
+        this.get = (ref, options) => ObjectManager.get(this.data, ref, options);
+        this.has = (ref, options) => ObjectManager.has(this.data, ref, options);
+        this.push = (ref, value, options) => ObjectManager.push(this.data, ref, value, options);
+        this.set = (ref, value, options) => ObjectManager.set(this.data, ref, value, options);
+        this.subtract = (ref, value, options) => ObjectManager.subtract(this.data, ref, value, options);
+        this.update = (ref, value, options) => ObjectManager.update(this.data, ref, value, options);
+    }
+    
     static add(obj: object, ref: Reference, value: number, options?: ObjectManagerAddOptions) {
         const array = Utils.resolveReference(ref, options);
 
