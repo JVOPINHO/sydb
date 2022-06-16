@@ -24,8 +24,15 @@ export interface ObjectManagerUpdateOptions extends ObjectManagerBaseOptions {
     force?: boolean;
 };
 
+export interface ObjectReferenceOptions {
+    split?: string;
+} 
+
 export interface SydbOptions {
-    path?: string;
+    path: string;
+    split?: string;
+    autoSave?: boolean;
+    spaceJson?: number;
 }
 
 export type Reference = string | symbol | Array<string>
