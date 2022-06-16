@@ -15,8 +15,8 @@ import Utils from './Utils';
 class ObjectManager {
     public add: (ref: Reference, value: number, options?: ObjectManagerAddOptions) => object;
     public delete: (ref: Reference, options?: ObjectManagerDeleteOptions) => boolean;
-    public get: (ref: Reference, options?: ObjectManagerGetOptions) => {};
-    public has: (ref: string, options?: ObjectManagerGetOptions) => boolean;
+    public get: (ref: Reference, options?: ObjectManagerGetOptions) => any;
+    public has: (ref: Reference, options?: ObjectManagerHasOptions) => boolean;
     public push: (ref: Reference, value: any, options?: ObjectManagerPushOptions) => object;
     public set: (ref: Reference, value: any, options?: ObjectManagerSetOptions) => object;
     public subtract: (ref: Reference, value: number, options?: ObjectManagerSubtractOptions) => object;
@@ -76,7 +76,7 @@ class ObjectManager {
         return val ?? null;
     }
 
-    static has(obj: object, ref: string, options?: ObjectManagerHasOptions) {
+    static has(obj: object, ref: Reference, options?: ObjectManagerHasOptions) {
         const array = Utils.resolveReference(ref, options);
         const data = { ...obj };
 
