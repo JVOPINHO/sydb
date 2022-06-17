@@ -38,12 +38,10 @@ class Sydb {
     }
 
     public save() {
-        console.log('Saving...');
         if(this.autoSave && !this.options.autoSave) {
             // @ts-ignore
             delete this.autoSave;
-
-            console.log('Auto save disabled.');
+            
             return;
         }
 
