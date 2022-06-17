@@ -40,19 +40,19 @@ class ObjectReference {
     }
 
     public add(value: number, options?: ObjectManagerAddOptions) {
-        const result = ObjectManager.add(this.data, this.reference, value, options);
+        ObjectManager.add(this.data, this.reference, value, options);
         
         this._save();
 
-        return result;
+        return this;
     }
 
     public delete(options?: ObjectManagerDeleteOptions) {
-        const result = ObjectManager.delete(this.data, this.reference, options);
+        ObjectManager.delete(this.data, this.reference, options);
 
         this._save();
 
-        return result;
+        return this;
     };
 
     public get(options?: ObjectManagerGetOptions) {
@@ -64,11 +64,11 @@ class ObjectReference {
     };
 
     public push(value: any, options?: ObjectManagerPushOptions) {
-        const result = ObjectManager.push(this.data, this.reference, value, options);
+        ObjectManager.push(this.data, this.reference, value, options);
 
         this._save();
 
-        return result;
+        return this;
     };
 
     public ref(reference: Reference) {
@@ -78,27 +78,27 @@ class ObjectReference {
     }
 
     public set(value: any, options?: ObjectManagerSetOptions) {
-        const result = ObjectManager.set(this.data, this.reference, value, options);
+        ObjectManager.set(this.data, this.reference, value, options);
 
         this._save();
 
-        return result;
+        return this;
     };
     
     public subtract(value: number, options?: ObjectManagerSubtractOptions) {
-        const result = ObjectManager.subtract(this.data, this.reference, value, options);
+        ObjectManager.subtract(this.data, this.reference, value, options);
 
         this._save();
 
-        return result;
+        return this;
     };
 
     public update(value: object, options?: ObjectManagerUpdateOptions) {
-        const result = ObjectManager.update(this.data, this.reference, value, options);
+        ObjectManager.update(this.data, this.reference, value, options);
 
         this._save();
 
-        return result;
+        return this;
     };
 
     public val(options?: ObjectManagerGetOptions) {
@@ -106,7 +106,7 @@ class ObjectReference {
     };
 
     private _save() {
-        return this.managerDatabase?.save.bind({ ...this.managerDatabase, private: true });
+        return this.managerDatabase?.save.bind(Object.assign(this.managerDatabase, { autoSave: true }))();
     }
 
     public save() {
