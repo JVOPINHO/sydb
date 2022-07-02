@@ -22,6 +22,7 @@
         "node_modules",
         "package.json",
         "build",
-		"test"
+		"test",
+		"src/utils/Schema"
     ]
 }

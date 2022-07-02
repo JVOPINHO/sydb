@@ -4,8 +4,9 @@
   "description": "A simple local database using the Node.js file system module.",
   "main": "build/index.js",
   "scripts": {
-    "dev": "tsc && node test/test.js",
-    "test": "node test/test.js",
+    "dev": "tsc && node test/sydb.test.js",
+    "test": "node test/sydb.test.js",
+    "test:schema": "node test/schema.test.js",
     "build": "tsc"
   },
   "repository": {

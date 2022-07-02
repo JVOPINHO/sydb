@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { Reference, SydbOptions } from '../typings';
 import ObjectReference from './utils/ObjectReference';
-import ObjectManager from './utils/ObjectManager';
 
 class Sydb {
     public options:  {

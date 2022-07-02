@@ -6,19 +6,21 @@
 <h2>Starting</h2>
 
 ```javascript
-    const Sydb = require("sydb")
+    const Sydb = require('sydb')
 
-    const db = new Sydb(path, options)
+    const db = new Sydb(options)
 ```
 
-|   Parameter   |   Type   | Descrirption                                   |
-|:-------------:|:--------:|------------------------------------------------|
-| path          | `string` | File path                                      |
-| options.split | `string` | Separator for dividing to reference properties `Note: Default separator is "/"` |
+| Parameter         | Type      | Optional | Default       | Descrirption                                                                                                      |
+|-------------------|-----------|----------|---------------|-------------------------------------------------------------------------------------------------------------------|
+| options.path      | `string`  | `false`  | `./sydb.json` | Database File Path                                                                                                |
+| options.split     | `string`  | `true`   | `/`           | Separator for dividing to reference properties                                                                    |
+| options.autoSave  | `boolean` | `true`   | `false`       | Automatically save when you hear a change                                                                         |
+| options.spaceJson | `number`  | `true`   | `4`           | Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read. |
 
 <br>
 
-<h2><a href="https://github.com/JVOPINHO/sydb/blob/master/test/test.js">Examples</a></h2>
+<h2>Examples</h2>
 
 <h3>Preparing</h3>
 
@@ -26,37 +28,35 @@ Json File
 ```json
     {
         "users": {
-            "001": {
-                "name": "João Oliveira",
-                "nickname": "JVOPINHO"
-            },
-            "002": null,
-            "003": {
-                "name": "Luiz",
-                "nickname": "luizdodibre"
-            },
-            "004": {
-                "name": "Sayran",
-                "nickname": "Polaroo"
+            "002": {
+                "name": "Pinho",
+                "username": "jvopinho",
+                "skills": [
+                    "JavaScript",
+                    "TypeScript",
+                    "NodeJS",
+                    "ReactJS",
+                    "NextJS"
+                ]
             }
         }
     }
 ```
 
 ```javascript
-    const Sydb = require("sydb")
+    const Sydb = require('sydb')
 
-    const db = new Sydb(__dirname + "/sydb.json")
+    const db = Sydb(__dirname + '/sydb.json')
 ```
 
 <h4>Applying reference:</h4>
 
 ```javascript
-    db.ref("reference")
+    db.ref('reference')
 
     // Example
 
-    db.ref("users/001")
+    db.ref('users/001')
 ```
 
 <h3>Methods</h3>
@@ -69,7 +69,13 @@ Json File
 ```
 
 ```javascript
-    db.ref("users/004").val() // -> { name: "Sayran", nickname: "Polaroo" }
+    db.ref('users/002').val() // -> { name: 'Pinho', username: 'jvopinho', skills: [...] }
+```
+<br>
+<p>The val method returns the value of the path determined by the reference in map form</p>
+
+```javascript
+    db.ref('users/').val({ type: 'map' }) // -> Map(1) { '002': [Object] }
 ```
 
 <br>
@@ -82,10 +88,9 @@ Json File
 ```
 
 ```javascript
-    db.ref("users/002").set({
-        name: "Bryan",
-        nickname: "TwoNike"
-    }) // -> { users: { "001": {...}, "002": { name: "Bryan", nickname: "TwoNike" }, "003": {...}, "004": {...} } }
+    db.ref('users/002').set({
+        name: 'John Pinho',
+    }) // -> { users: { '002': { name: 'John Pinho' } } }
 ```
 
 <br>
@@ -99,9 +104,9 @@ Json File
 ```
 
 ```javascript
-    db.ref("users/001").update({
-        nickname: "JPinho"
-    }) // -> { users: { "001": { name: "João Oliveira", nickname: "JPinho" }, "002": {...}, "003": {...}, "004": {...} } }
+    db.ref('users/002').update({
+        username: 'JPinho'
+    }) // -> { users: { '002': { name: 'Pinho', username: 'JPinho', skills: [...] } } }
 ```
 
 <br>
@@ -110,9 +115,9 @@ Json File
 <p>The delete method deletes the desired values from a path determined by the reference.</p>
 
 ```javascript
-    db.ref("reference").delete()
+    db.ref('reference').delete()
 ```
 
 ```javascript
-    db.ref("users/003").delete() // -> { users: { "001": {...}, "002": {...}, "004": {...} } }
+    db.ref('users/002').delete() // -> { users: {} }
 ```
